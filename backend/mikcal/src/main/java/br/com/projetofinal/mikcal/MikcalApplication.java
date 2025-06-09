@@ -13,6 +13,3 @@ public class MikcalApplication {
 	}
 
 }
-
-
-// teste
