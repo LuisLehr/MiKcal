@@ -1,0 +1,42 @@
+<div class="login-container">
+  <div class="titulo">
+    <h2>MiKcal</h2>
+  </div>
+
+  <div class="form-wrapper">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          placeholder="Usuário:"
+          [class.invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"
+        />
+        <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" class="error">
+          Usuário é obrigatório
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input
+          id="senha"
+          type="password"
+          formControlName="senha"
+          placeholder="Senha:"
+          [class.invalid]="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched"
+        />
+        <div *ngIf="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched" class="error">
+          Senha é obrigatória
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message"> {{errorMessage}}</div>
+
+      <button mat-button type="submit" [disabled]="loginForm.invalid" style="color: #153B1C;">Login</button>
+    </form>
+  </div>
+  
+  <button mat-button type="button" (click)="irParaCadastro()" style="margin-bottom: 1%; color: #153B1C;">Cadastro</button>
+
+</div>

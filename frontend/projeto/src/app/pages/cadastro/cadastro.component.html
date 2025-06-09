@@ -1,0 +1,60 @@
+<div class="cadastro-container">
+    <div class="titulo">
+        <h2>Cadastro</h2>
+    </div>
+
+    <div class="legenda-titulo">
+        <h3>Digite suas informações para fazer o cadastro!</h3>
+    </div>
+
+    <div class="formulario">
+        <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
+
+            <div class="div-input">
+                <label for="nome">Nome:</label>
+                <input type="text" placeholder="Nome:" id="nome" formControlName="nome">
+                <div *ngIf="cadastroForm.get('nome')?.invalid && cadastroForm.get('nome')?.touched" class="error">
+                    <div *ngIf="cadastroForm.get('nome')?.errors?.['required']">Nome é obrigatório</div>
+                </div>
+            </div>
+
+            <div class="div-input">
+                <label for="username">Usuário:</label>
+                <input type="text" placeholder="Usuário:" id="username" formControlName="username">
+                <div *ngIf="cadastroForm.get('username')?.invalid && (cadastroForm.get('username')?.touched || cadastroForm.get('username')?.dirty)" class="error">
+                    <div *ngIf="cadastroForm.get('username')?.errors?.['required']">Username é obrigatório.</div>
+                    <div *ngIf="cadastroForm.get('username')?.errors?.['minlength']">Username deve ter pelo menos 3 caracteres.</div>
+                    <div *ngIf="cadastroForm.get('username')?.errors?.['usernameTaken']">Este username já está em uso.</div>
+                    <div *ngIf="cadastroForm.get('username')?.errors?.['usernameError']">Erro ao verificar username. Tente novamente.</div>
+                </div>
+            </div>
+
+            <div class="div-input">
+                <label for="senha">Senha:</label>
+                <input type="password" placeholder="Senha:" id="senha" formControlName="senha">
+                <div *ngIf="cadastroForm.get('senha')?.invalid && cadastroForm.get('senha')?.touched" class="error">
+                    <div *ngIf="cadastroForm.get('senha')?.errors?.['required']">A senha é obrigatória</div>
+                    <div *ngIf="cadastroForm.get('senha')?.errors?.['pattern']">A senha deve conter letras, números e ter pelo menos 6 caracteres</div>
+                </div>
+            </div>
+
+            <div class="div-input">
+                <label for="email">Email:</label>
+                <input type="email" placeholder="Email:" id="email" formControlName="email">
+                <div *ngIf="cadastroForm.get('email')?.invalid && cadastroForm.get('email')?.touched" class="error">
+                    <div *ngIf="cadastroForm.get('email')?.errors?.['required']">É obrigatório digitar um email</div>
+                    <div *ngIf="cadastroForm.get('email')?.errors?.['email']">Formato de email inválido</div>
+                </div>
+            </div>
+
+            <div *ngIf="errorMessage" class="error global-error">{{ errorMessage }}</div>
+
+            <button type="submit" [disabled]="cadastroForm.invalid || cadastroForm.pending">Continuar</button>
+
+        </form>
+    </div>
+
+    <div class="voltar">
+        <a [routerLink]="['/login']" style="color: #153B1C;">Já possuo uma conta</a>
+    </div>
+</div>
