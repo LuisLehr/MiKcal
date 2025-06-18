@@ -34,7 +34,7 @@
                 <label for="dataNascimento">Data de Nascimento:</label>
                 <input type="date" placeholder="Data de nascimento: 01/01/2002" formControlName="dataNascimento" style="color: #757575;">
                 <div *ngIf="cadastro2Form.get('dataNascimento')?.invalid && cadastro2Form.get('dataNascimento')?.touched" class="error">
-                    <div *ngIf="cadastro2Form.get('dataNascimento')?.errors?.['required']">A data de nascimneot deve ser preenchida</div>
+                    <div *ngIf="cadastro2Form.get('dataNascimento')?.errors?.['required']">A data de nascimento deve ser preenchida</div>
                 </div>
             </div>
 

@@ -45,8 +45,8 @@ input {
 }
 
 .div-input label {
-    width: 100%;        
-  text-align: left;    
+    width: 100%;
+  text-align: left;
   margin-bottom: 5px;
   margin-left: 6%;
   font-size: 16px;
@@ -75,4 +75,15 @@ button:disabled {
 form {
     text-align: center;
     margin-bottom: 10px;
+}
+
+.error {
+  color: rgb(201, 0, 0);
+  margin-top: 5px;
+  text-align: center;
+  width: 300px;
+  word-wrap: break-word;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }

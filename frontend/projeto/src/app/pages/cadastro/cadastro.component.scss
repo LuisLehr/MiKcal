@@ -1,90 +1,110 @@
 .cadastro-container {
-    background-color: #94BF69;
-    color: #f2f2f2;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
- 
-    font-family: 'FeatherBold';
+  background-color: #94BF69;
+  color: #f2f2f2;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'FeatherBold';
 }
 
 .titulo {
-    margin-top: 0px;
-    display: flex;
-    height: 31%;
-    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+  margin-top: -40px;
+  height: 30%;
+  text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
-.titulo h2{
-    font-family: 'FeatherBold';
-    color: #f2f2f2;
-    font-size: 130px;
+.titulo h2 {
+  font-family: 'FeatherBold';
+  color: #f2f2f2;
+  font-size: 130px;
 }
 
 .formulario {
-    font-family: 'FeatherBold';
-    margin-bottom: 20px;
+  font-family: 'FeatherBold';
+  margin-bottom: 10px;
+  text-align: center;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 400px; /* Limits the form width for better centering */
 }
 
 form {
-    text-align: center;
-    margin-bottom: 10%;
+  text-align: center;
+  margin-bottom: 0;
 }
 
 input {
-    font-family: 'FeatherBold';
-    font-size: 16px;
-    width: 300px;
-    padding: 10px 20px;
-    border: 1px solid #ccc;
-    border-radius: 50px;
-    height: 40px;
+  font-family: 'FeatherBold';
+  font-size: 16px;
+  width: 300px;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 50px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto; /* Centers the input horizontally */
+  display: block; /* Ensures margin auto works */
 }
 
 .div-input {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  width: 100%; /* Ensures the div takes full width of the form */
 }
 
-.div-input label{
-    align-items: flex-start;
-    text-align: left;
-    margin-left: 6%;
-    margin-bottom: 5px;
-    color: #153B1C;
+.div-input label {
+  align-items: flex-start;
+  text-align: left;
+  margin-left: 6%;
+  margin-bottom: 5px;
+  color: #153B1C;
+  width: 300px; /* Matches input width for consistency */
 }
 
 button {
-    font-family: 'FeatherBold';
-    width: 200px;
-    padding: 12px;
-    background-color: #f2f2f2;
-    border: none;
-    border-radius: 100px;
-    cursor: pointer;
-    font-size: 18px;
-    margin-top: 10px;
-    color: #153B1C;
+  font-family: 'FeatherBold';
+  width: 200px;
+  padding: 12px;
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 5px;
+  color: #153B1C;
 }
 
 button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-    color: #153B1C;
+  background-color: #cccccc;
+  cursor: not-allowed;
+  color: #153B1C;
 }
 
 .legenda-titulo {
-    color: #153B1C
+  color: #153B1C;
 }
 
-
 .voltar {
-    color: #153B1C;
-    display: flex;
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 1%;
+  color: #153B1C;
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 1%;
+}
+
+.error {
+  color: rgb(201, 0, 0);
+  margin-top: 5px;
+  text-align: center;
+  width: 300px;
+  word-wrap: break-word;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }

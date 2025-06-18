@@ -23,7 +23,7 @@
                 <input type="text" placeholder="Usuário:" id="username" formControlName="username">
                 <div *ngIf="cadastroForm.get('username')?.invalid && (cadastroForm.get('username')?.touched || cadastroForm.get('username')?.dirty)" class="error">
                     <div *ngIf="cadastroForm.get('username')?.errors?.['required']">Username é obrigatório.</div>
-                    <div *ngIf="cadastroForm.get('username')?.errors?.['minlength']">Username deve ter pelo menos 3 caracteres.</div>
+                    <div *ngIf="cadastroForm.get('username')?.errors?.['minlength']">Username deve conter pelo menos 3 caracteres.</div>
                     <div *ngIf="cadastroForm.get('username')?.errors?.['usernameTaken']">Este username já está em uso.</div>
                     <div *ngIf="cadastroForm.get('username')?.errors?.['usernameError']">Erro ao verificar username. Tente novamente.</div>
                 </div>
