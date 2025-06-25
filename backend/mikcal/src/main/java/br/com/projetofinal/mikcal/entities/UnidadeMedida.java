@@ -34,4 +34,7 @@ public class UnidadeMedida {
 
     @Column(name="descricao")
     private String descricao;
+
+    @Column(name="abreviacao")
+    private String abreviacao;
 }

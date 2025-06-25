@@ -11,7 +11,7 @@ export class AuthService {
     private apiUrl = 'http://localhost:8080/auth/login';
 
     constructor(private http: HttpClient) { }
-    
+
     login(loginRequest: LoginRequest): Observable<LoginResponse> {
         return this.http.post<LoginResponse>(this.apiUrl, loginRequest);
     }
@@ -29,13 +29,28 @@ export class AuthService {
     }
 
     isLoggedIn(): boolean {
-        return !!this.getToken();
+        const token = this.getToken();
+        if (!token) {
+          return false;
+        }
+        return !this.isTokenExpired(token);
+    }
+
+    private isTokenExpired(token: string): boolean {
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const exp = payload.exp * 1000; //Converter segundos para milisegundos
+        return Date.now() > exp;
+      } catch (e) {
+        console.error('Erro ao decodificar token: ',e);
+        return true;
+      }
     }
 
     getAuthHeaders(): HttpHeaders {
         const token = this.getToken();
         return new HttpHeaders({
-            'Authorization': token ? 'Bearer ${token}' : ''
+            'Authorization': token ? `Bearer ${token}` : ''
         });
     }
 }

@@ -50,4 +50,5 @@ public class Alimento {
     @ManyToOne                             // Indicando a cardinalidade da relação
     @JoinColumn(name="id_unidademedida")   // Nome da chave estrangeira
     private UnidadeMedida unidadeMedida;
+
 }
