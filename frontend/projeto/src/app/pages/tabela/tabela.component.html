@@ -2,16 +2,21 @@
 
 <div class="container">
   <h2>Alimentos</h2>
+  <p class="legenda-titulo">Nessa tela você pode conferir todos os alimentos cadastrados <br> e suas informações nutricionais.</p>
 
   <div *ngIf="loading" class="loading">Carregando...</div>
   <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="input-pesquisar">
+    <input type="text" placeholder="Pesquisar: Frango..." [(ngModel)]="searchTerm" (input)="pesquisarAlimento()" class="search-input">
+  </div>
 
   <div *ngIf="!loading && !error && alimentos.length > 0" class="card-container">
     <div class="card" *ngFor="let alimento of alimentos">
       <div class="card-header">
         <h3>{{ alimento.nome }} - 100{{ alimento.unidadeMedida.abreviacao }}</h3>
       </div>
-      <div class="card-body">
+      <div class="card-body" style="color: #153B1C">
         <p><strong>Kcal: </strong> {{ alimento.kcal }}</p>
         <p><strong>Carboidratos: </strong> {{ alimento.carboidratos }}g</p>
         <p><strong>Proteínas: </strong> {{ alimento.proteinas }}g</p>
@@ -21,5 +26,11 @@
 
   <div *ngIf="!loading && !error && alimentos.length === 0" class="no-data">
     Nenhum alimento encontrado.
+  </div>
+
+  <div class="pagination" *ngIf="!loading && !error && totalPages > 1">
+    <button [disabled]="currentPage === 0" (click)="paginaAnterior()">Anterior</button>
+    <span>Página {{ currentPage + 1}} de {{ totalPages }}</span>
+    <button  [disabled]="currentPage === totalPages - 1" (click)="proximaPagina()">Próxima</button>
   </div>
 </div>

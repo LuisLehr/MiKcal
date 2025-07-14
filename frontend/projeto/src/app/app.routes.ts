@@ -8,6 +8,7 @@ import {PerfilComponent} from './pages/perfil/perfil.component';
 import {CalendarioComponent} from './pages/calendario/calendario.component';
 import {RelatorioComponent} from './pages/relatorio/relatorio.component';
 import {TabelaComponent} from './pages/tabela/tabela.component';
+import {EditarCadastroComponent} from './pages/editar-cadastro/editar-cadastro.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent }, //Define a página inicial para a tela de Login
@@ -19,6 +20,7 @@ export const routes: Routes = [
   { path: 'calendario', component: CalendarioComponent},
   { path: 'relatorio', component: RelatorioComponent},
   { path: 'tabela', component: TabelaComponent},
+  { path: 'editarCadastro', component: EditarCadastroComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' }, // Redireciona qualquer rota invalida para Login
 
 ];

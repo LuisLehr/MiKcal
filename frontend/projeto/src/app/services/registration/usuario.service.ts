@@ -1,6 +1,8 @@
 import {Injectable} from "@angular/core"
 import {HttpClient} from "@angular/common/http"
 import {catchError, Observable, throwError} from "rxjs"
+import {Usuario} from '../../models/usuario';
+import {AuthService} from '../auth/auth.service';
 
 
 @Injectable({
@@ -10,7 +12,7 @@ import {catchError, Observable, throwError} from "rxjs"
 export class UsuarioService {
     private baseUrl = 'http://localhost:8080/usuario';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private authService: AuthService) { }
 
     cadastrar(cadastroData: any): Observable< {message: string}> {
         console.log('Enviando requisição POST para:',`${this.baseUrl}/cadastro`,cadastroData);
@@ -35,4 +37,28 @@ export class UsuarioService {
           })
         );
     }
+
+    atualizarUsuario(usuarioData: any): Observable<{message: string}> {
+      const url = `${this.baseUrl}/me`;
+      console.log('Enviando requisição PUT para: ', url, usuarioData);
+      return this.http.put<{ message: string }> (url, usuarioData, { headers: this.authService.getAuthHeaders() }).pipe(
+        catchError(error => {
+          console.error('Erro na requisição de atualização:', error);
+          return throwError(() => new Error(error.error?.message || 'Erro ao atualizar usuário'));
+        })
+      );
+    }
+
+    getUsuarioLogado(): Observable<Usuario> {
+      const url = `${this.baseUrl}/me`;
+      console.log('Buscando usuário logado', url);
+      return this.http.get<Usuario>(url, { headers:this.authService.getAuthHeaders() }).pipe(
+        catchError(error => {
+          console.error('Erro ao buscar usuário logado:', error);
+          return throwError(() => new Error(error.error?.message || 'Erro ao buscar usuário'));
+        })
+      );
+    }
+
+
 }

@@ -3,12 +3,13 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+
 }
 
 h2 {
   font-size: 50px;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 0px;
   margin-bottom: 20px;
   color: #153B1C;
 }
@@ -53,11 +54,13 @@ h2 {
 
 .card-body {
   padding: 15px;
+  color: #153B1C;
 
   p {
     margin: 8px 0;
     font-size: 1rem;
     color: #555;
+    color: #153B1C;
 
     strong {
       color: #333;
@@ -83,4 +86,83 @@ h2 {
   font-size: 18px;
   color: #666;
   margin-top: 20px;
+}
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+  font-family: "FeatherBold";
+
+  button {
+    padding: 10px 20px;
+    background-color: #94BF69;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: "FeatherBold";
+
+    &:hover:not(:disabled) {
+      background-color: #7aa555;
+    }
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+
+  span {
+    font-size: 16px;
+    color: #153B1C;
+  }
+}
+
+.legenda-titulo {
+  text-align: center;
+  color: #153B1C;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.pagination {
+  position: fixed;
+  left: 40%;
+  right: 40%;
+  bottom: 20px;
+  align-items: center;
+  text-align: center;
+  align-content: center;
+}
+
+.input-pesquisar{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  .search-input{
+    padding-left: 25px;
+    width: 96%;
+    height: 60px;
+    border: 1px solid #ddd;
+    border-radius: 200px;
+    font-size: 16px;
+    font-family: 'FeatherBold';
+    color: #153B1C;
+    outline: none;
+
+    &::placeholder {
+      color: #999;
+    }
+
+    &:focus{
+      border-color: #94BF69;
+      box-shadow: 0 0 5px rgba(148, 191, 105, 0.5);
+    }
+  }
 }

@@ -13,5 +13,6 @@ public class UsuarioCadastroDTO {
     private String email;
     private double peso;
     private Integer altura;
+    private Integer metaCalorica;
     private String dataNascimento;  // formato: "yyyy-mm-dd"
 }

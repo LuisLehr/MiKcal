@@ -34,7 +34,12 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/usuario/cadastro", "/usuario/checar-username/**","/auth/login", "/error", "/auth/test-login").permitAll()
+                .requestMatchers("/usuario/cadastro",
+                        "/usuario/checar-username/**",
+                        "/auth/login",
+                        "/error",
+                        "/auth/test-login",
+                        "/alimento/**").permitAll()
                 .anyRequest().authenticated()
             )
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

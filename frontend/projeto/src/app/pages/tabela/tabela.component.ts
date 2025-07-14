@@ -1,21 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuComponent } from '../../components/shared/menu/menu.component';
-import { AlimentoService, Alimento } from '../../services/services/alimento.service';
+import { AlimentoService, Alimento, Page } from '../../services/services/alimento.service';
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-tabela',
-  imports: [MenuComponent, CommonModule],
+  imports: [MenuComponent, CommonModule, FormsModule],
   standalone: true,
   templateUrl: './tabela.component.html',
   styleUrl: './tabela.component.scss'
 })
+
 export class TabelaComponent implements OnInit {
   alimentos: Alimento[] = [];
+  totalPages: number = 0;
+  pageSize:number = 8;
+  currentPage:number = 0;
   loading = false;
   error: string | null = null;
+  searchTerm: string = '';
 
   constructor(private alimentoService: AlimentoService, private router: Router) {}
 
@@ -23,13 +29,14 @@ export class TabelaComponent implements OnInit {
     this.carregarAlimentos();
   }
 
-  carregarAlimentos(): void {
+  carregarAlimentos(page: number = this.currentPage, searchTerm: string = this.searchTerm): void {
     this.loading = true;
     this.error = null;
-    this.alimentoService.getAlimento().subscribe({
-      next: (data) => {
-        this.alimentos = data;
-        console.log(this.alimentos);
+    this.alimentoService.getAlimento(page, this.pageSize, searchTerm).subscribe({
+      next: (data: Page<Alimento>) => {
+        this.alimentos = data.content;
+        this.currentPage = data.number;
+        this.totalPages = data.totalPages;
         this.loading = false;
       },
       error: (err: HttpErrorResponse) => {
@@ -51,5 +58,24 @@ export class TabelaComponent implements OnInit {
         console.log('Carregando de alimentos concluído.');
       }
     });
+  }
+
+  pesquisarAlimento(): void {
+    this.currentPage = 0; // Resetar para a primeira página ao pesquisar
+    this.carregarAlimentos(this.currentPage, this.searchTerm);
+  }
+
+  proximaPagina(): void {
+    if (this.currentPage < this.totalPages -1) {
+      this.currentPage++;
+      this.carregarAlimentos(this.currentPage, this.searchTerm);
+    }
+  }
+
+  paginaAnterior(): void {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.carregarAlimentos(this.currentPage, this.searchTerm);
+    }
   }
 }

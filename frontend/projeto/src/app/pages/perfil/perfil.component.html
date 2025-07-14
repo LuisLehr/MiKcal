@@ -1,2 +1,21 @@
 <app-menu></app-menu>
-<h2 style="font-size: 50px; text-align: center; align-content: center; margin-top: 20%">Perfil</h2>
+
+<div class="container">
+  <div class="profile-card">
+    <div class="card-content">
+      <div class="titulo">
+        <p>Suas Informações</p>
+      </div>
+      <h1>{{ usuario?.nome }}, {{ calcularIdade(usuario?.dataNascimento) }}</h1>
+      <h4>Usuário: {{ usuario?.username }}</h4>
+      <h4>Email: {{ usuario?.email }}</h4>
+      <h4>Altura: {{ usuario?.altura }}cm</h4>
+      <h4>Peso: {{ usuario?.peso }}Kg</h4>
+      <h4>Meta de Ingestão Calórica: {{ usuario?.metaCalorica || 'Não Definida' }}kcal</h4>
+      <div class="buttons">
+        <button mat-button type="button" (click)="irParaEditarCadastro()" style="font-family: 'FeatherBold'; color: #153B1C">Editar Cadastro</button>
+        <button mat-button type="button" (click)="logout()" style="font-family: 'FeatherBold'; color: #153B1C">Sair</button>
+      </div>
+    </div>
+  </div>
+</div>

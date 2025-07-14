@@ -35,7 +35,9 @@ export class LoginComponent {
       const loginRequest: LoginRequest = this.loginForm.value;
       this.authService.login(loginRequest).subscribe({
         next: (response) => {
+          console.log('Resposta do login', response);
           this.authService.saveToken(response.token);
+          console.log('Token salvo no localStorage', localStorage.getItem('token'));
           this.router.navigate(['/home']);
         },
         error: (error) => {
