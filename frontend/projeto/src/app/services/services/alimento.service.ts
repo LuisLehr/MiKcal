@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, of, pipe, throwError} from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 
 
@@ -44,8 +45,25 @@ export class AlimentoService {
 
   getAlimento(page: number = 0, size: number = 12, searchTerm: string = ''): Observable<Page<Alimento>> {
     const url = searchTerm
-    ? `${this.apiUrl}/search?nome=${encodeURIComponent(searchTerm)}&page=${page}&size=${size}`
+      ? `${this.apiUrl}/search?nome=${encodeURIComponent(searchTerm)}&page=${page}&size=${size}`
       : `${this.apiUrl}?page=${page}&size=${size}`;
-    return this.http.get<Page<Alimento>>(url);
+    return this.http.get<Page<Alimento>>(url, { headers: this.authService.getAuthHeaders() }).pipe(
+      catchError((error) => {
+        console.error('Erro ao listar alimentos paginados');
+
+        return throwError(() => new Error(error.error?.message || 'Erro ao listar alimentos'));
+      })
+    );
   }
+
+  listarTodos(): Observable<Alimento[]> {
+    return this.http.get<Alimento[]>(`${this.apiUrl}/all`, { headers: this.authService.getAuthHeaders() }).pipe(
+      catchError((error) => {
+        console.error('Erro ao listar todos os alimentos:', error);
+        return throwError(() => new Error(error.error?.message || 'Erro ao listar alimentos'));
+      })
+    )
+  }
+
+
 }

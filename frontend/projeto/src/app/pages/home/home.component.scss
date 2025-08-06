@@ -1,0 +1,120 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "FeatherBold";
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #153B1C;
+}
+
+mat-card {
+  margin-bottom: 30px;
+  padding: 20px;
+}
+
+h2 {
+  margin-top: 0;
+  color: #153B1C;
+}
+
+h3 {
+  color: #153B1C;
+}
+
+circle-progress {
+  display: block;
+  margin: 20px auto;
+}
+
+.item-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+
+  mat-form-field {
+    flex: 1;
+    .mat-label {
+      color: #153B1C;
+    }
+    .mat-option-text {
+      color: #153B1C;
+    }
+    .mat-error {
+      color: #153B1C;
+    }
+  }
+}
+
+
+button#nova-refeicao-btn {
+  margin-bottom: 20px;
+}
+
+.refeicao-form {
+  margin-bottom: 40px !important;
+  font-family: "FeatherBold";
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+  color: #153B1C;
+}
+
+p {
+  color: #153B1C;
+}
+
+mat-error {
+  color: #153B1C;
+}
+
+input {
+  font-family: "FeatherBold";
+  color: #153B1C;
+  border: 1px solid #ccc;
+}
+
+/* Input */
+input {
+  width: 300px;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 50px;
+  height: 40px;
+  font-family: 'FeatherBold';
+  font-size: 16px;
+}
+
+/* Input inválido */
+input.invalid {
+  border-color: rgb(201, 0, 0);
+  color: #153B1C;
+}
+
+input {
+  font-family: 'FeatherBold';
+  font-size: 16px;
+  width: 300px;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 50px;
+  height: 40px;
+}
+
+.div-input {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  font-size: 16px;
+}

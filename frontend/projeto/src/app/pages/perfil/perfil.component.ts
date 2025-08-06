@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuComponent } from '../../components/shared/menu/menu.component';
 import { PerfilService } from '../../services/services/perfil.service';
-import {Router, RouterLink} from '@angular/router';
+import {Router} from '@angular/router';
 import { Usuario} from '../../models/usuario';
 import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-perfil',
-  imports: [MenuComponent, RouterLink, MatButton],
+  imports: [MenuComponent, MatButton],
   standalone: true,
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss'

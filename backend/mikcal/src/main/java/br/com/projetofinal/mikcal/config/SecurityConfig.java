@@ -40,7 +40,7 @@ public class SecurityConfig {
                         "/error",
                         "/auth/test-login",
                         "/alimento/**").permitAll()
-                .anyRequest().authenticated()
+                    .requestMatchers("/refeicao/**").authenticated().anyRequest().authenticated()
             )
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

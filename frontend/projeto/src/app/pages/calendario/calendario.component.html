@@ -1,2 +1,57 @@
 <app-menu></app-menu>
-<h2 style="font-size: 50px; text-align: center; align-content: center; margin-top: 20%">Calendário</h2>
+<div class="container">
+  <h2>Calendário de Refeições</h2>
+  <p class="legenda-titulo">Nessa tela você pode conferir seu histórico de refeições <br> e suas informações nutricionais.</p>
+  <div class="content-container">
+    <div *ngIf="loading" class="loading">Carregando...</div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+    <div class="columns" *ngIf="!loading && !error">
+      <div class="left-column">
+        <div class="calendar-container">
+          <mat-calendar [selected]="selectedDate" (selectedChange)="onDateChange($event)"></mat-calendar>
+        </div>
+        <div class="summary">
+          <h3>Resumo do Dia {{ selectedDate | date: 'dd/MM/yyyy' }}</h3>
+          <mat-card class="summary-card">
+            <mat-card-content>
+              <p><strong>Calorias Totais:</strong> {{ totalCalorias | number: '1.0-0' }} kcal</p>
+              <p><strong>Carboidratos Totais:</strong> {{ totalCarboidratos | number: '1.0-0' }}g</p>
+              <p><strong>Proteínas Totais:</strong> {{ totalProteinas | number: '1.0-0' }}g</p>
+              <p><strong>Meta Calórica:</strong> {{ metaCalorica | number: '1.0-0' }} kcal</p>
+              <p><strong>Status:</strong>
+                <span [ngClass]="metaAtingida() ? 'meta-atingida' : 'meta-nao-atingida'">
+                  {{ metaAtingida() ? 'Meta Atingida!' : 'Meta Não Atingida' }}
+                </span>
+              </p>
+              <mat-progress-bar mode="determinate" [value]="getProgressValue()"></mat-progress-bar>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+      <div class="right-column">
+        <div class="refeicoes" *ngIf="refeicoes.length > 0">
+          <mat-card *ngFor="let refeicao of refeicoes" class="refeicao-card">
+            <mat-card-header>
+              <div class="card-header-content">
+                <mat-card-title>{{ refeicao.tipoRefeicao }} - {{ refeicao.dataRefeicao | date: 'HH:mm' }}h</mat-card-title>
+              </div>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-list>
+                <mat-list-item *ngFor="let item of refeicao.itens">
+                  <span *ngIf="item.id_alimento && item.quantidade != null">
+                    {{ item.id_alimento.nome }}: {{ item.quantidade }}{{ item.id_alimento.unidadeMedida?.abreviacao }}
+                    ({{ (item.id_alimento.unidadeMedida?.id === 2 ? item.quantidade * item.id_alimento.kcal : (item.quantidade * item.id_alimento.kcal) / 100) | number: '1.0-0' }} kcal)
+                  </span>
+                </mat-list-item>
+              </mat-list>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div *ngIf="refeicoes.length === 0">
+          <p>Nenhuma refeição registrada para este dia.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

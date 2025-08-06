@@ -24,3 +24,4 @@ export const routes: Routes = [
   { path: '**', redirectTo: '', pathMatch: 'full' }, // Redireciona qualquer rota invalida para Login
 
 ];
+

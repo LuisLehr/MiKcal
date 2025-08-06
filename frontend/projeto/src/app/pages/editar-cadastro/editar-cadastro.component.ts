@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuComponent } from '../../components/shared/menu/menu.component';
 import { UsuarioService } from '../../services/registration/usuario.service';
 import { AuthService } from '../../services/auth/auth.service';
 import {FormBuilder, FormsModule} from '@angular/forms';
@@ -8,7 +7,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-editar-cadastro',
-  imports: [MenuComponent, FormsModule, CommonModule],
+  imports: [ FormsModule, CommonModule],
   standalone: true,
   templateUrl: './editar-cadastro.component.html',
   styleUrl: './editar-cadastro.component.scss'

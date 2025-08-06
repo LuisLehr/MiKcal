@@ -1,6 +1,7 @@
 package br.com.projetofinal.mikcal.entities;
 
 // Imports
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,6 +38,7 @@ public class RefeicaoAlimento {
     // Indicando quem será a chave estrangeira
     @ManyToOne                         // Indicando a cardinalidade da relação
     @JoinColumn(name="id_refeicao")     // Nome da chave estrangeira
+    @JsonBackReference
     private Refeicao id_refeicao;
 
     // Indicando quem será a chave estrangeira

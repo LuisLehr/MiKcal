@@ -56,7 +56,7 @@ export class Cadastro2Component {
           console.log('Cadastro realizado com sucesso: ', response);
           this.errorMessage = '';
           this.router.navigate(['/login']);
-        }, 
+        },
         error: (error) => {
           console.error('Erro ao cadastrar: ', error);
           this.errorMessage = error.message || 'Erro ao realizar o cadastro. Tente novamente.';
@@ -66,5 +66,5 @@ export class Cadastro2Component {
         console.warn('Formulário inválido:', this.cadastro2Form.errors);
         this.errorMessage = 'Por favor, preencha todos os campos corretamente.';
       }
-    } 
+    }
   }

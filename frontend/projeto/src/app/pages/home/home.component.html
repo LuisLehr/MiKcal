@@ -1,2 +1,146 @@
 <app-menu></app-menu>
-<h2 style="text-align: center; margin-top: 20%; font-family: 'FeatherBold'; font-size: 100px;">HOME</h2>
+
+<div class="container">
+  <h1>Bem-vindo, {{ nomeUsuario }}!</h1>
+  <mat-card>
+    <h2>Progresso Diário</h2>
+    <circle-progress
+      [percent]="progresso"
+      [radius]="150"
+      [outerStrokeWidth]="16"
+      [innerStrokeWidth]="8"
+      [outerStrokeColor]="'#78C000'"
+      [innerStrokeColor]="'#C7E596'"
+      [animation]="true"
+      [animationDuration]="300"
+    ></circle-progress>
+    <h3>Consumidas: {{ total | number: '1.0-0' }} kcal de {{ meta }}</h3>
+  </mat-card>
+  <mat-card>
+    <h2>Refeições do Dia</h2>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="toggleNovaRefeicao()"
+      id="nova-refeicao-btn"
+      style="color: #153B1C"
+    >
+      {{ novaRefeicao ? 'Cancelar' : 'Nova Refeição' }}
+    </button>
+
+    <form
+      *ngIf="novaRefeicao"
+      [formGroup]="refeicaoForm"
+      (ngSubmit)="salvar()"
+      class="refeicao-form"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo de Refeição</mat-label>
+        <mat-select formControlName="tipoRefeicao">
+          <mat-option *ngFor="let tipo of tiposRefeicao" [value]="tipo">
+            {{ tipo }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="refeicaoForm.get('tipoRefeicao')?.hasError('required')">
+          Tipo de refeição é obrigatório
+        </mat-error>
+      </mat-form-field>
+
+      <div formArrayName="itens">
+        <div
+          *ngFor="let item of itens().controls; let i = index"
+          [formGroupName]="i"
+          class="item-group"
+        >
+          <mat-form-field appearance="outline">
+            <mat-label>Alimento</mat-label>
+            <mat-select formControlName="idAlimento">
+              <mat-option *ngFor="let alimento of alimentos" [value]="alimento.id">
+                {{ alimento.nome }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="item.get('idAlimento')?.hasError('required')">
+              Alimento é obrigatório
+            </mat-error>
+            <mat-error *ngIf="item.get('idAlimento')?.hasError('min')">
+              Selecione um alimento válido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Quantidade</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="quantidade"
+              [placeholder]="getPlaceholder(i)"
+            >
+            <mat-error *ngIf="item.get('quantidade')?.hasError('required')">
+              Quantidade é obrigatória
+            </mat-error>
+            <mat-error *ngIf="item.get('quantidade')?.hasError('min')">
+              Quantidade deve ser maior que 0
+            </mat-error>
+          </mat-form-field>
+
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="removeItem(i)"
+            *ngIf="itens().length > 1"
+            title="Remover item"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="addItem()"
+        [disabled]="refeicaoForm.invalid"
+        style="color: #153B1C"
+      >
+        Adicionar outro alimento
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="refeicaoForm.invalid"
+        style="color: #153B1C"
+      >
+        Salvar refeição
+      </button>
+    </form>
+
+    <div *ngFor="let refeicao of refeicoes">
+      <mat-card>
+        <h3>{{ refeicao.tipoRefeicao }} - {{ refeicao.dataRefeicao | date: 'dd/MM/yyyy' }}</h3>
+        <p *ngIf="refeicao.itens && refeicao.itens.length > 0">Itens:</p>
+        <ul>
+          <li *ngFor="let item of refeicao.itens">
+            {{ item.id_alimento.nome }}
+            - {{ item.quantidade }} {{ item.id_alimento.unidadeMedida?.abreviacao || 'un' }}
+          </li>
+        </ul>
+        <p *ngIf="refeicao.itens && refeicao.itens.length > 0">
+          Totais:
+          {{ calculaTotaisRefeicao(refeicao).kcal | number: '1.0-0' }} kcal,
+          {{ calculaTotaisRefeicao(refeicao).carboidratos | number: '1.1-1' }}g carboidratos,
+          {{ calculaTotaisRefeicao(refeicao).proteinas | number: '1.1-1' }}g proteínas
+        </p>
+        <p *ngIf="!(refeicao.itens && refeicao.itens.length > 0)">Nenhum item registrado</p>
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="excluir(refeicao)"
+          title="Excluir refeição"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card>
+    </div>
+  </mat-card>
+</div>
