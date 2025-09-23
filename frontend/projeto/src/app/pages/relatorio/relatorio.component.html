@@ -1,2 +1,20 @@
 <app-menu></app-menu>
-<h2 style="font-size: 50px; text-align: center; align-content: center; margin-top: 20%">Relatórios</h2>
+
+<div class="relatorio-container">
+  <h2>Relatórios</h2>
+  <div class="controls">
+    <label for="period">Período: </label>
+    <select id="period" [(ngModel)]="period" (ngModelChange)="onPeriodChange($event)">
+      <option value="weekly">Semanal</option>
+      <option value="monthly">Mensal</option>
+    </select>
+    <label for="startDate">Data de Início: </label>
+    <input type="date" id="startDate" [(ngModel)]="startDate" (ngModelChange)="onDateChange($event)">
+  </div>
+  <div class="chart-container">
+    <canvas baseChart
+            [data]="barChartData"
+            [options]="barChartOptions"
+            [type]="'bar'"></canvas>
+  </div>
+</div>

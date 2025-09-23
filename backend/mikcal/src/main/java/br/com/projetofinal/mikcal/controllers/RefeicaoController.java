@@ -10,18 +10,21 @@ import br.com.projetofinal.mikcal.repositories.RefeicaoRepository;
 import br.com.projetofinal.mikcal.repositories.RefeicaoAlimentoRepository;
 import br.com.projetofinal.mikcal.repositories.UsuarioRepository;
 import br.com.projetofinal.mikcal.repositories.AlimentoRepository;
+import br.com.projetofinal.mikcal.services.RefeicaoService;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -37,16 +40,19 @@ public class RefeicaoController {
     private final UsuarioRepository usuarioRepo;
 
     private final RefeicaoAlimentoRepository refeicaoAlimentoRepo;
+    private final RefeicaoService refeicaoService;
 
     public RefeicaoController(
             RefeicaoRepository refeicaoRepo,
             RefeicaoAlimentoRepository refeicaoAlimentoRepo,
             UsuarioRepository usuarioRepo,
-            AlimentoRepository alimentoRepo) {
+            AlimentoRepository alimentoRepo,
+            RefeicaoService refeicaoService) {
         this.refeicaoRepo = refeicaoRepo;
         this.alimentoRepo = alimentoRepo;
         this.usuarioRepo = usuarioRepo;
         this.refeicaoAlimentoRepo = refeicaoAlimentoRepo;
+        this.refeicaoService = refeicaoService;
     }
 
     @GetMapping("/usuario/{id}/hoje")
@@ -66,7 +72,7 @@ public class RefeicaoController {
 
             List<Refeicao> refeicoes = refeicaoRepo.findRefeicoesDoDia(id, start, end);
             for (Refeicao refeicao : refeicoes) {
-                List <RefeicaoAlimento> itens = refeicaoAlimentoRepo.findRefeicaoAlimentoById_refeicao(refeicao);
+                List<RefeicaoAlimento> itens = refeicaoAlimentoRepo.findRefeicaoAlimentoById_refeicao(refeicao);
                 refeicao.setItens(itens);
             }
 
@@ -160,16 +166,39 @@ public class RefeicaoController {
             LocalDateTime endOfDay = localDate.atTime(LocalTime.MAX);
             Date start = Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
             Date end = Date.from(endOfDay.atZone(ZoneId.systemDefault()).toInstant());
-            List <Refeicao> refeicoes = refeicaoRepo.findRefeicoesDoDia(id, start, end);
+            List<Refeicao> refeicoes = refeicaoRepo.findRefeicoesDoDia(id, start, end);
             for (Refeicao refeicao : refeicoes) {
                 List<RefeicaoAlimento> itens = refeicaoAlimentoRepo.findRefeicaoAlimentoById_refeicao(refeicao);
                 refeicao.setItens(itens);
             }
             logger.info("Retornando {} refeições para usuário ID: {}", refeicoes.size(), id);
-             return ResponseEntity.ok(refeicoes);
+            return ResponseEntity.ok(refeicoes);
         } catch (Exception e) {
             logger.error("Erro ao listar refeições do usuário ID: {} na data: {}: {}", id, data, e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
+    }
+
+
+    @GetMapping("/usuario/{id}/calories")
+    public ResponseEntity<Map<String, Object>> getCalorieData(
+            @PathVariable("id") Long id,
+            @RequestParam("period") String period,
+            @RequestParam("startDate") String startDate) {
+                logger.info("Buscando calorias para o ID: {}, periodo: {}, startDate: {}", id, period, startDate);
+
+                try {
+                    if (!usuarioRepo.existsById(id)) {
+                        logger.warn("Usuario com ID {} não encontrado", id);
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+                    }
+                    LocalDate localDate = LocalDate.parse(startDate);
+                    Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                    Map<String, Object> calorieData = refeicaoService.getCalorieDataByPeriod(id, period, date);
+                    return ResponseEntity.ok(calorieData);
+                } catch (Exception e) {
+                    logger.error("Erro ao buscar caloria por data para usuario ID: {}, {}", id, e.getMessage());
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+                }
     }
 }

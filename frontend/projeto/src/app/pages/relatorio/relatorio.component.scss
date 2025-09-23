@@ -1,0 +1,52 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.relatorio-container {
+  max-width: 800px;
+  margin: 0px auto 20px; /* Margem superior de 80px para afastar do menu */
+  padding: 20px;
+  font-family: "FeatherBold";
+  padding-top: 110px;
+}
+
+h2 {
+  font-size: 50px; /* Reduzido de 50px */
+  margin: 0 0 40px;
+  text-align: center;
+  color: #153B1C;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.controls label {
+  font-size: 16px;
+  color: #153B1C;
+}
+
+.controls select,
+.controls input {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-family: "FeatherBold";
+}
+
+.chart-container {
+  max-width: 700px; /* Reduzido de 800px */
+  height: 400px; /* Reduzido de 400px */
+  margin: 0 auto;
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}

@@ -65,4 +65,17 @@ export class RefeicaoService {
         })
       );
   }
+
+
+  getCalorieData(userId: number, period: string, startDate: string): Observable<{ calorieData: {date: string, calories:number} []; metaCalorica: number }> {
+    const url = `${this.apiUrl}/usuario/${userId}/calories?period=${period}&startDate=${startDate}`;
+    console.log('Enviando requisição para:', url, 'Headers:', this.auth.getAuthHeaders());
+    return this.http.get<{calorieData: {date: string, calories: number}[]; metaCalorica: number}>(url, {headers: this.auth.getAuthHeaders()})
+      .pipe(
+        catchError((error) => {
+          console.error('Erro ao buscar dados de calorias:', error);
+          return throwError(() => new Error(error.error?.message || 'Erro ao buscar dados de calorias'));
+        })
+      );
+  }
 }

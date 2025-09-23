@@ -15,9 +15,10 @@ app-menu {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 50px;
+  margin: 0 50px;
   box-sizing: border-box;
-}
+  padding-top: 120px;
+  }
 
 .profile-card {
   font-family: "FeatherBold";
